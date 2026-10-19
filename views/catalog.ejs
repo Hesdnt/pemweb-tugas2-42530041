@@ -1,0 +1,28 @@
+<%- include('partials/navbar') %>
+<div class="wrap page">
+  <h1 class="page-title">Katalog film</h1>
+
+  <div class="filters" role="group" aria-label="Filter genre">
+    <a href="/katalog" class="chip <%= selected === '' ? 'on' : '' %>">Semua</a>
+    <% genres.forEach(function(g) { %>
+      <a href="/katalog?genre=<%= g %>" class="chip <%= selected === g ? 'on' : '' %>"><%= g %></a>
+    <% }); %>
+  </div>
+
+  <% if (films.length === 0) { %>
+    <p class="empty">Belum ada film untuk genre "<%= selected %>". Coba pilih genre lain di atas.</p>
+  <% } else { %>
+    <div class="grid">
+      <% films.forEach(function(f) { %>
+        <a class="poster-card" href="/item/<%= f.id %>">
+          <div class="poster">
+            <img src="<%= f.poster %>" alt="Poster film <%= f.judul %>">
+          </div>
+          <h3><%= f.judul %></h3>
+          <p class="meta"><%= f.sutradara %>, <%= f.tahun %></p>
+        </a>
+      <% }); %>
+    </div>
+  <% } %>
+</div>
+<%- include('partials/footer') %>

@@ -1,0 +1,47 @@
+<%- include('partials/navbar') %>
+
+<section class="hero g-<%= hero.genre %>">
+  <img class="hero-img" src="/images/hero.png" alt="">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <span class="tag"><%= hero.genre %></span>
+      <h1><%= hero.judul %></h1>
+      <p class="meta"><%= hero.sutradara %> &middot; <%= hero.tahun %></p>
+      <p class="hero-synopsis"><%= hero.sinopsis %></p>
+      <a class="btn" href="/item/<%= hero.id %>">Lihat detail</a>
+      <a class="btn btn-ghost" href="#katalog">Jelajahi film</a>
+    </div>
+    <a class="play" href="/item/<%= hero.id %>" aria-label="Buka detail <%= hero.judul %>">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+    </a>
+  </div>
+</section>
+
+<div class="wrap section" id="katalog">
+  <h2 class="section-title">Katalog film</h2>
+
+  <div class="filters" role="group" aria-label="Filter genre">
+    <a href="/#katalog" class="chip <%= selected === '' ? 'on' : '' %>">Semua</a>
+    <% genres.forEach(function(g) { %>
+      <a href="/?genre=<%= g %>#katalog" class="chip <%= selected === g ? 'on' : '' %>"><%= g %></a>
+    <% }); %>
+  </div>
+
+  <% if (films.length === 0) { %>
+    <p class="empty">Belum ada film untuk genre "<%= selected %>". Coba pilih genre lain di atas.</p>
+  <% } else { %>
+    <div class="grid">
+      <% films.forEach(function(f) { %>
+        <a class="poster-card" href="/item/<%= f.id %>">
+          <div class="poster">
+            <img src="<%= f.poster %>" alt="Poster film <%= f.judul %>">
+          </div>
+          <h3><%= f.judul %></h3>
+          <p class="meta"><%= f.sutradara %>, <%= f.tahun %></p>
+        </a>
+      <% }); %>
+    </div>
+  <% } %>
+</div>
+
+<%- include('partials/footer') %>
